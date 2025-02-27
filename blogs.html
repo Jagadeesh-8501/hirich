@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - Hirich Pharma</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Latest Blogs</h1>
+    </header>
+
+    <main>
+        <section id="blog-list">
+            <div class="container">
+                <div class="row" id="blogs-container">
+                    <!-- Blogs will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        fetch('blogs.json')
+            .then(response => response.json())
+            .then(blogs => {
+                const blogContainer = document.getElementById('blogs-container');
+
+                blogs.forEach(blog => {
+                    const blogCard = document.createElement('div');
+                    blogCard.classList.add('blog-card');
+
+                    blogCard.innerHTML = `
+                        <h2><a href="blog-details.html?slug=${blog.slug}">${blog.title}</a></h2>
+                        <p><strong>Category:</strong> ${blog.category}</p>
+                        <p><strong>Published On:</strong> ${blog.date}</p>
+                        <p>${blog.content.introduction.substring(0, 150)}...</p>
+                        <a href="blog-details.html?slug=${blog.slug}" class="read-more">Read More</a>
+                    `;
+
+                    blogContainer.appendChild(blogCard);
+                });
+            })
+            .catch(error => console.error('Error loading blogs:', error));
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Details - Hirich Pharma</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1 id="blog-title">Loading...</h1>
+    </header>
+
+    <main>
+        <section id="blog-content">
+            <div class="container">
+                <p><strong>Category:</strong> <span id="blog-category"></span></p>
+                <p><strong>Published On:</strong> <span ></span></p>
+                <p id="blog-intro"></p>
+
+                <div id="blog-sections"></div>
+
+                <h3>FAQs</h3>
+                <ul id="blog-faqs"></ul>
+
+                <h3>Related Resources</h3>
+                <ul id="blog-resources"></ul>
+
+                <p id="blog-conclusion"></p>
+                <p><strong>Author:</strong> <span id="blog-author"></span></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Get blog slug from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const blogSlug = urlParams.get('slug');
+
+        fetch('blogs.json')
+            .then(response => response.json())
+            .then(blogs => {
+                const blog = blogs.find(b => b.slug === blogSlug);
+
+                if (!blog) {
+                    document.body.innerHTML = '<h1>Blog Not Found</h1>';
+                    return;
+                }
+
+                document.getElementById('blog-title').textContent = blog.title;
+                document.getElementById('blog-category').textContent = blog.category;
+                document.getElementById('blog-date').textContent = blog.date;
+                document.getElementById('blog-intro').textContent = blog.content.introduction;
+                document.getElementById('blog-author').textContent = blog.author;
+
+                // Populate sections
+                const sectionsContainer = document.getElementById('blog-sections');
+                blog.content.sections.forEach(section => {
+                    const sectionElement = document.createElement('div');
+                    sectionElement.innerHTML = `<h2>${section.title}</h2><p>${section.content}</p>`;
+                    sectionsContainer.appendChild(sectionElement);
+                });
+
+                // Populate FAQs
+                const faqContainer = document.getElementById('blog-faqs');
+                blog.content.faq.forEach(faq => {
+                    const faqItem = document.createElement('li');
+                    faqItem.innerHTML = `<strong>${faq.question}</strong>: ${faq.answer}`;
+                    faqContainer.appendChild(faqItem);
+                });
+                 const tagscontainer = document.getElementById('blog-tags');
+
+
+                // Populate Related Resources
+                const resourcesContainer = document.getElementById('blog-resources');
+                blog.content.related_resources.forEach(resource => {
+                    const resourceItem = document.createElement('li');
+                    resourceItem.innerHTML = `<a href="${resource.link}" target="_blank">${resource.title}</a>`;
+                    resourcesContainer.appendChild(resourceItem);
+                });
+
+                document.getElementById('blog-conclusion').textContent = blog.content.conclusion;
+            })
+            .catch(error => console.error('Error loading blog details:', error));
+    </script>
+
+</body>
+</html>

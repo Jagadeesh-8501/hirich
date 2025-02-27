@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Naturecan Hemp Tea Blend 20 bags",
+        "size": "Strong / 4% / 30ml",
+        "price": 19.85,
+        "oldPrice": 23.85,
+        "available": true,
+        "sku": "Product-1-1",
+        "description": "Nisl quam nestibulum ac quam nec odio...",
+        "rating": 5,
+        "reviews": [
+            {
+                "name": "David Warner",
+                "date": "January 7, 2024",
+                "comment": "Great product!"
+            }
+        ],
+        "benefits": ["Helps quit smoking", "Treats anxiety"],
+        "sideEffects": ["Changes in appetite", "Weight gain"],
+        "additionalInfo": [
+            { "name": "Weight", "value": "0.5 kg" },
+            { "name": "Dimensions", "value": "24 × 1 × 2 cm" }
+        ]
+    }
+]
